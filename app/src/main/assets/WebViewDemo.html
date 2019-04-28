@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebView小Demo</title>
+    <style type="text/css">
+        body{
+            background: #61aaff;
+        }
+    </style>
+</head>
+<body>
+<h2>这里是HTML网页</h2>
+<div><span>要输入的数据：</span><input type="text" id="input"></div><br>
+<button id="button">发送给Android</button>
+<script type="text/javascript">
+    var btn=document.getElementById("button");
+    var data=document.getElementById("input");
+    // 定义js 方法，会被 Android 调用
+    var send=function(str) {
+        data.value=str;
+    }
+    // 调用Android 中的方法
+    btn.addEventListener("click",function () {
+        var str=data.value;
+        // 判断 Android 加载js 接口的时候有没有定义的sendData 方法
+        if( window.sendData ){
+            sendData.setValue(str);
+        }else{
+            alert("Android 中没有对应的方法");
+        }
+    });
+</script>
+</body>
+</html>
